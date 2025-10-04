@@ -10,35 +10,35 @@ import { UsersService } from './users.service';
 export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
-    @Post()
+    @Post('createUser')
     @Roles('admin')
     async createUser(@Body() createUserDto) {
         const user =await this.usersService.createUser(createUserDto);
-        return {message: 'User created successfully', user}   
+        return {message: 'User created successfully',user}   
     }
 
-    @Get()
+    @Get('getAllUsers')
     @Roles('admin')
     async findAll() {
         const Users = await this.usersService.findAll();
         return { message: 'Users retrieved successfully', Users }
     }
 
-    @Get(':id')
+    @Get('getOneUser/:id')
     @Roles('admin')
     async findOne(@Param() id: number) {
         const user = await this.usersService.findOne(id);
         return { message: 'User retrieved successfully', user }
     }
 
-    @Put(':id')
+    @Put('updateUser/:id')
     @Roles('admin')
     async updateUser(@Param() id: number, @Body() updateUserDto) {
         const user = await this.usersService.updateUser(id, updateUserDto);
         return { message: 'User updated successfully', user }
     }
 
-    @Delete(':id')
+    @Delete('removeUser/:id')
     @Roles('admin')
     async deleteUser(@Param() id: number) {
         const user = await this.usersService.deleteUser(id);

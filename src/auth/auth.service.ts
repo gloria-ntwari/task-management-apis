@@ -11,10 +11,10 @@ import { loginDto } from './dto/login.dto';
 export class AuthService {
     constructor(@InjectRepository(User)
     private usersRepository: Repository<User>,
-    private jwtService: JwtService,
-    ) {}
+        private jwtService: JwtService,
+    ) { }
 
-    async register(registerDto: registerDto): Promise<{message: string}> {
+    async register(registerDto: registerDto): Promise<{ message: string }> {
         const { name, email, password, role } = registerDto;
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = this.usersRepository.create({ name, email, password: hashedPassword, role });
@@ -23,7 +23,7 @@ export class AuthService {
     }
 
 
-    async login(loginDto: loginDto): Promise<{ accessToken: string,meessage:string }> {
+    async login(loginDto: loginDto): Promise<{ accessToken: string, meessage: string }> {
         const { email, password } = loginDto;
         const user = await this.usersRepository.findOne({ where: { email } });
         if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -32,7 +32,7 @@ export class AuthService {
         const payload = { email: user.email, sub: user.id, role: user.role };
         return {
             accessToken: this.jwtService.sign(payload),
-            meessage:'Login successful'
+            meessage: 'Login successful'
         };
     }
 }

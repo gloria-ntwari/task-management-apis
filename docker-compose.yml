@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   app:
     build:
@@ -23,7 +22,7 @@ services:
     image: postgres:14
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=gloria_@2007
+      - POSTGRES_PASSWORD=gloria_2007
       - POSTGRES_DB=task_management
     ports:
       - "5432:5432"
